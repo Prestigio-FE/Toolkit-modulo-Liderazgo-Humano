@@ -1,0 +1,656 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Toolkit · Liderazgo desde el Ser · Módulo 1</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --magenta: #E8007E;
+    --magenta-dark: #C2006A;
+    --magenta-light: #FF4DAD;
+    --black: #111111;
+    --gray-dark: #3D3D3D;
+    --gray-mid: #777777;
+    --gray-light: #F0F0F0;
+    --white: #FFFFFF;
+    --mint: #7ECDC5;
+    --font: 'Inter', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body { font-family: var(--font); color: var(--black); background: var(--white); line-height: 1.6; }
+
+  /* ===== NAVBAR ===== */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    background: var(--black);
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 40px; height: 64px;
+    border-bottom: 3px solid var(--magenta);
+  }
+  .nav-logos { display: flex; align-items: center; gap: 20px; }
+  .nav-logo-prestigio { height: 30px; filter: brightness(0) invert(1); }
+  .nav-sep { width: 1px; height: 28px; background: rgba(255,255,255,0.3); }
+  .nav-logo-comfama { height: 26px; }
+  .nav-links { display: flex; gap: 28px; }
+  .nav-links a {
+    color: rgba(255,255,255,0.75); text-decoration: none;
+    font-size: 13px; font-weight: 500; letter-spacing: 0.3px; transition: color .2s;
+  }
+  .nav-links a:hover { color: var(--magenta); }
+
+  /* ===== HERO ===== */
+  #hero {
+    min-height: 100vh; background: var(--black);
+    display: grid; grid-template-columns: 1fr 1fr;
+    padding-top: 64px; overflow: hidden;
+  }
+  .hero-content {
+    display: flex; flex-direction: column; justify-content: center;
+    padding: 80px 60px 80px 80px; position: relative; z-index: 2;
+  }
+  .hero-badge {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: rgba(232,0,126,0.15); border: 1px solid var(--magenta);
+    border-radius: 3px; padding: 6px 14px;
+    font-size: 11px; font-weight: 700; letter-spacing: 1.5px;
+    text-transform: uppercase; color: var(--magenta-light);
+    margin-bottom: 28px; width: fit-content;
+  }
+  .hero-badge::before { content: '★'; font-size: 10px; }
+  .hero-programa { font-size: 13px; font-weight: 600; color: var(--mint); text-transform: uppercase; letter-spacing: 2px; margin-bottom: 12px; }
+  .hero-titulo { font-size: clamp(32px, 4vw, 52px); font-weight: 900; line-height: 1.05; color: var(--white); margin-bottom: 10px; }
+  .hero-titulo span { color: var(--magenta); }
+  .hero-modulo { font-size: clamp(20px, 2.5vw, 30px); font-weight: 700; color: var(--mint); line-height: 1.2; margin-bottom: 32px; }
+  .hero-desc { font-size: 16px; color: rgba(255,255,255,0.7); max-width: 460px; line-height: 1.7; }
+
+  .hero-visual { position: relative; display: flex; align-items: center; justify-content: center; overflow: hidden; }
+  .hero-visual-bg {
+    position: absolute; inset: 0;
+    background: linear-gradient(135deg, var(--magenta) 0%, #8B0057 100%);
+    clip-path: polygon(0 0, 100% 0, 100% 100%, 15% 100%);
+  }
+  .hero-visual-content { position: relative; z-index: 2; padding: 60px 40px 60px 80px; }
+  .hero-stat-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+  .hero-stat {
+    background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2);
+    border-radius: 8px; padding: 24px 20px; text-align: center;
+    backdrop-filter: blur(10px);
+  }
+  .hero-stat-num { font-size: 36px; font-weight: 900; color: var(--white); line-height: 1; margin-bottom: 6px; }
+  .hero-stat-label { font-size: 12px; color: rgba(255,255,255,0.8); text-transform: uppercase; letter-spacing: 0.8px; }
+  .hero-deco-star { position: absolute; opacity: 0.6; }
+  .deco-tl { top: 30px; left: 30px; font-size: 44px; color: var(--magenta-light); }
+  .deco-tr { top: 20px; right: 20px; color: var(--mint); font-size: 44px; opacity: 0.9; }
+  .deco-bl { bottom: 30px; left: 30px; color: var(--magenta); font-size: 32px; }
+
+  /* ===== SECTIONS ===== */
+  section { padding: 80px 0; }
+  .container { max-width: 1100px; margin: 0 auto; padding: 0 40px; }
+  .section-label { font-size: 11px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: var(--magenta); margin-bottom: 12px; }
+  .section-title { font-size: clamp(26px, 3vw, 40px); font-weight: 900; line-height: 1.1; margin-bottom: 20px; }
+  .section-desc { font-size: 17px; color: var(--gray-dark); line-height: 1.75; max-width: 700px; }
+  .divider-magenta { width: 48px; height: 4px; background: var(--magenta); margin-bottom: 24px; border-radius: 2px; }
+
+  /* ===== PROPÓSITO ===== */
+  #proposito { background: var(--gray-light); }
+  .proposito-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center; margin-top: 48px; }
+  .proposito-text h2 { font-size: clamp(28px, 3vw, 42px); font-weight: 900; line-height: 1.1; margin-bottom: 20px; }
+  .proposito-text p { font-size: 16px; line-height: 1.8; color: var(--gray-dark); margin-bottom: 16px; }
+  .proposito-quote {
+    border-left: 4px solid var(--magenta); padding: 16px 24px; margin: 32px 0;
+    background: var(--white); font-style: italic; font-size: 17px; font-weight: 600;
+    color: var(--magenta-dark); line-height: 1.5; border-radius: 0 8px 8px 0;
+  }
+  .proposito-cards { display: flex; flex-direction: column; gap: 16px; }
+  .prop-card {
+    background: var(--white); border-radius: 10px; padding: 24px 28px;
+    display: flex; gap: 16px; align-items: flex-start;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.06); border-left: 4px solid var(--magenta);
+    transition: box-shadow .2s, transform .2s;
+  }
+  .prop-card:hover { box-shadow: 0 8px 24px rgba(232,0,126,0.12); transform: translateX(4px); }
+  .prop-icon { font-size: 28px; flex-shrink: 0; margin-top: 2px; }
+  .prop-card h4 { font-size: 15px; font-weight: 700; margin-bottom: 4px; }
+  .prop-card p { font-size: 14px; color: var(--gray-mid); line-height: 1.5; }
+
+  /* ===== OBJETIVO ===== */
+  #objetivo { background: var(--black); color: var(--white); position: relative; overflow: hidden; }
+  #objetivo::before {
+    content: ''; position: absolute; top: -100px; right: -100px;
+    width: 500px; height: 500px;
+    background: radial-gradient(circle, rgba(232,0,126,0.15) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .objetivo-inner { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: start; }
+  .objetivo-left { padding-top: 8px; }
+  .objetivo-left p {
+    color: rgba(255,255,255,0.75); font-size: 16px;
+    line-height: 1.8; margin-bottom: 20px;
+  }
+  .objetivo-right {
+    background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 12px; padding: 36px;
+  }
+  .objetivo-right h3 { font-size: 15px; font-weight: 700; color: var(--mint); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 24px; }
+  .competencia-item { display: flex; align-items: center; gap: 12px; padding: 14px 0; border-bottom: 1px solid rgba(255,255,255,0.08); }
+  .competencia-item:last-child { border-bottom: none; }
+  .comp-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--magenta); flex-shrink: 0; }
+  .competencia-item span { font-size: 15px; color: rgba(255,255,255,0.85); font-weight: 500; }
+
+  /* ===== HERRAMIENTAS ===== */
+  #herramientas { background: var(--white); }
+  .herramientas-intro { max-width: 620px; margin-bottom: 56px; }
+  .tools-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+  .tool-card {
+    background: var(--white); border-radius: 12px; border: 1.5px solid var(--gray-light);
+    overflow: hidden; transition: box-shadow .25s, transform .25s, border-color .25s;
+  }
+  .tool-card:hover { box-shadow: 0 12px 40px rgba(232,0,126,0.14); transform: translateY(-4px); border-color: var(--magenta); }
+  .tool-header { background: var(--black); padding: 24px 28px; display: flex; align-items: flex-start; gap: 14px; }
+  .tool-number { font-size: 36px; font-weight: 900; color: var(--magenta); line-height: 1; flex-shrink: 0; opacity: 0.9; }
+  .tool-lab { font-size: 10px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; color: var(--mint); margin-bottom: 4px; }
+  .tool-name { font-size: 17px; font-weight: 800; color: var(--white); line-height: 1.2; }
+  .tool-body { padding: 24px 28px; }
+  .tool-tag { display: inline-block; background: rgba(232,0,126,0.1); color: var(--magenta); font-size: 11px; font-weight: 700; letter-spacing: 0.8px; text-transform: uppercase; padding: 4px 10px; border-radius: 3px; margin-bottom: 14px; }
+  .tool-desc { font-size: 14px; line-height: 1.65; color: var(--gray-dark); margin-bottom: 16px; }
+  .tool-questions { list-style: none; margin-bottom: 16px; }
+  .tool-questions li { font-size: 13px; color: var(--gray-mid); padding: 6px 0 6px 18px; position: relative; line-height: 1.5; border-bottom: 1px solid rgba(0,0,0,0.05); }
+  .tool-questions li:last-child { border-bottom: none; }
+  .tool-questions li::before { content: '→'; position: absolute; left: 0; color: var(--magenta); font-size: 12px; top: 7px; }
+
+  /* ===== HERRAMIENTA 446 — IMÁGENES ===== */
+  .h446-img-wrap { display: flex; flex-direction: column; gap: 28px; }
+  .h446-img-block { width: 100%; }
+  .h446-img { width: 100%; height: auto; display: block; border-radius: 8px; box-shadow: 0 2px 16px rgba(0,0,0,0.08); }
+
+  /* Perfil de cambio */
+  .perfil-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 8px; }
+  .perfil-item { border-radius: 6px; padding: 12px; font-size: 12px; font-weight: 600; }
+  .perfil-empatico { background: rgba(126,205,197,0.1); border: 1px solid rgba(126,205,197,0.4); }
+  .perfil-involucrador { background: rgba(232,0,126,0.07); border: 1px solid rgba(232,0,126,0.25); }
+  .perfil-analitico { background: rgba(255,180,0,0.07); border: 1px solid rgba(255,180,0,0.3); }
+  .perfil-resolutivo { background: rgba(80,80,80,0.06); border: 1px solid rgba(0,0,0,0.12); }
+  .perfil-name { font-weight: 800; font-size: 13px; margin-bottom: 4px; display: block; }
+  .perfil-mot { font-size: 11px; color: var(--gray-mid); }
+  .compare-table { width: 100%; border-collapse: collapse; margin-top: 8px; }
+  .compare-table thead tr { background: var(--magenta); }
+  .compare-table th { padding: 10px 14px; font-size: 11px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.8px; color: var(--white); text-align: left; }
+  .compare-table td { padding: 9px 14px; font-size: 12px; line-height: 1.4; border-bottom: 1px solid rgba(0,0,0,0.05); color: var(--gray-dark); }
+  .compare-table tr:nth-child(even) td { background: rgba(0,0,0,0.02); }
+  .compare-table .td-tech { border-left: 3px solid #555; }
+  .compare-table .td-adapt { border-left: 3px solid var(--magenta); }
+
+  /* ===== GUÍA VISUAL ===== */
+  #guia-visual { background: var(--black); color: var(--white); }
+  .guia-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; margin-top: 48px; }
+  .guia-block h3 { font-size: 12px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; color: var(--mint); margin-bottom: 16px; }
+  .color-swatch { height: 80px; border-radius: 6px; margin-bottom: 8px; display: flex; align-items: flex-end; padding: 8px; }
+  .swatch-label { font-size: 11px; font-weight: 700; }
+  .swatch-magenta { background: var(--magenta); } .swatch-magenta .swatch-label { color: var(--white); }
+  .swatch-black { background: #1A1A1A; border: 1px solid #444; } .swatch-black .swatch-label { color: var(--white); }
+  .swatch-gray { background: #F0F0F0; } .swatch-gray .swatch-label { color: var(--black); }
+  .swatch-mint { background: var(--mint); } .swatch-mint .swatch-label { color: var(--black); }
+  .color-hex { font-size: 11px; color: rgba(255,255,255,0.4); margin-top: 2px; }
+  .typo-sample { background: rgba(255,255,255,0.05); border-radius: 8px; padding: 20px; }
+  .typo-h1 { font-size: 28px; font-weight: 900; color: var(--white); line-height: 1; }
+  .typo-h2 { font-size: 20px; font-weight: 700; color: var(--magenta); margin-top: 8px; }
+  .typo-body { font-size: 14px; color: rgba(255,255,255,0.6); margin-top: 8px; }
+  .typo-meta { font-size: 11px; letter-spacing: 1.5px; text-transform: uppercase; color: var(--mint); margin-top: 8px; }
+  .concepto-text { font-size: 14px; color: rgba(255,255,255,0.7); line-height: 1.8; }
+  .pilar { display: flex; gap: 10px; margin-bottom: 12px; }
+  .pilar-dot { width: 6px; height: 6px; background: var(--magenta); border-radius: 50%; margin-top: 8px; flex-shrink: 0; }
+  .pilar span { font-size: 14px; color: rgba(255,255,255,0.75); }
+  .wireframe-preview { background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.1); border-radius: 8px; padding: 20px; font-size: 12px; line-height: 2; color: rgba(255,255,255,0.6); font-family: monospace; }
+  .wf-section { color: var(--magenta); font-weight: 700; }
+  .wf-element { padding-left: 16px; }
+
+  /* ===== UX ===== */
+  #ux { background: var(--white); }
+  .ux-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 24px; margin-top: 48px; }
+  .ux-card { border: 1.5px solid var(--gray-light); border-radius: 12px; padding: 28px 32px; transition: border-color .2s, box-shadow .2s; }
+  .ux-card:hover { border-color: var(--magenta); box-shadow: 0 4px 20px rgba(232,0,126,0.08); }
+  .ux-card-icon { font-size: 32px; margin-bottom: 14px; }
+  .ux-card h3 { font-size: 17px; font-weight: 800; margin-bottom: 10px; }
+  .ux-list { list-style: none; }
+  .ux-list li { font-size: 14px; color: var(--gray-dark); padding: 7px 0 7px 18px; position: relative; border-bottom: 1px solid rgba(0,0,0,0.04); line-height: 1.5; }
+  .ux-list li:last-child { border-bottom: none; }
+  .ux-list li::before { content: '✓'; position: absolute; left: 0; color: var(--magenta); font-weight: 700; }
+
+  /* ===== FOOTER ===== */
+  footer { background: var(--black); color: rgba(255,255,255,0.5); padding: 40px 0; font-size: 13px; }
+  .footer-inner { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 20px; }
+  .footer-logos { display: flex; align-items: center; gap: 20px; flex-wrap: wrap; }
+  .footer-logo-prestigio { height: 26px; filter: brightness(0) invert(0.55); }
+  .footer-logo-comfama { height: 22px; }
+  .footer-sep { color: rgba(255,255,255,0.2); }
+  .footer-vigilado { height: 28px; opacity: 0.6; }
+  .footer-info { text-align: right; line-height: 1.7; }
+
+  /* ===== RESPONSIVE ===== */
+  @media (max-width: 1024px) {
+    .tools-grid { grid-template-columns: repeat(2, 1fr); }
+    .hero-titulo { font-size: 36px; }
+  }
+  @media (max-width: 900px) {
+    #hero { grid-template-columns: 1fr; min-height: auto; }
+    .hero-visual { display: none; }
+    .hero-content { padding: 48px 24px 60px; }
+    .proposito-grid { grid-template-columns: 1fr; gap: 32px; }
+    .objetivo-inner { grid-template-columns: 1fr; }
+    .tools-grid { grid-template-columns: 1fr; }
+    nav { padding: 0 16px; }
+    .nav-links { display: none; }
+    .container { padding: 0 16px; }
+    section { padding: 56px 0; }
+    .footer-inner { flex-direction: column; align-items: flex-start; gap: 16px; }
+    .footer-info { text-align: left; }
+    .tool-body[style*="grid-template-columns"] { display: block !important; }
+  }
+  @media (max-width: 680px) {
+    .hero-content { padding: 40px 16px 48px; }
+    .hero-titulo { font-size: 28px; }
+    .hero-modulo { font-size: 18px; }
+    .section-title { font-size: 24px; }
+    .container { padding: 0 14px; }
+    section { padding: 44px 0; }
+    .proposito-cards { gap: 12px; }
+    .prop-card { padding: 18px 20px; }
+    .nav-logos { gap: 12px; }
+    .nav-logo-comfama { height: 20px; }
+    .nav-logo-prestigio { height: 24px; }
+    .perfil-grid { grid-template-columns: 1fr; }
+
+    .compare-table { font-size: 11px; }
+    .compare-table th, .compare-table td { padding: 7px 8px; }
+  }
+  @media (max-width: 420px) {
+    .hero-titulo { font-size: 24px; }
+    .hero-modulo { font-size: 16px; }
+    .nav { height: 56px; }
+    .tool-header { padding: 18px 20px; }
+    .tool-body { padding: 18px 20px; }
+    .footer-logos { gap: 12px; }
+  }
+  ::-webkit-scrollbar { width: 6px; }
+  ::-webkit-scrollbar-track { background: var(--black); }
+  ::-webkit-scrollbar-thumb { background: var(--magenta); border-radius: 3px; }
+</style>
+</head>
+<body>
+
+<!-- ===== NAVBAR ===== -->
+<nav>
+  <div class="nav-logos">
+    <img src="PRESTIGIO LOGO NUEVO.png" alt="Prestigio" class="nav-logo-prestigio">
+    <div class="nav-sep"></div>
+    <img src="comfama_logo.png" alt="Comfama" class="nav-logo-comfama">
+  </div>
+  <div class="nav-links">
+    <a href="#proposito">Propósito</a>
+    <a href="#objetivo">Objetivo</a>
+    <a href="#herramientas">Herramientas</a>
+  </div>
+</nav>
+
+<!-- ===== HERO ===== -->
+<section id="hero">
+  <div class="hero-content">
+    <div class="hero-badge">Toolkit del Programa</div>
+    <div class="hero-programa">Liderazgo desde el Ser: Visión Digital y Adaptabilidad</div>
+    <h1 class="hero-titulo"><span>Módulo 1</span></h1>
+    <div class="hero-modulo">Liderazgo Humano:<br>Pensamiento Sistémico y<br>Culturas de Confianza</div>
+    <p class="hero-desc">Un conjunto de herramientas prácticas para desarrollar autoconciencia, gestionar el cambio con inteligencia adaptativa y construir entornos de confianza organizacional.</p>
+  </div>
+  <div class="hero-visual">
+    <div class="hero-visual-bg"></div>
+    <div class="hero-visual-content">
+      <div style="font-size:13px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:rgba(255,255,255,0.5);margin-bottom:24px;">Contenido del módulo</div>
+      <div class="hero-stat-grid">
+        <div class="hero-stat">
+          <div class="hero-stat-num">7</div>
+          <div class="hero-stat-label">Herramientas prácticas</div>
+        </div>
+        <div class="hero-stat">
+          <div class="hero-stat-num">5</div>
+          <div class="hero-stat-label">Sesiones de aprendizaje</div>
+        </div>
+      </div>
+      <div style="margin-top:28px;padding-top:24px;border-top:1px solid rgba(255,255,255,0.15);">
+        <div style="font-size:11px;letter-spacing:1px;text-transform:uppercase;color:rgba(255,255,255,0.4);margin-bottom:12px;">Operado por</div>
+        <div style="font-size:15px;font-weight:700;color:rgba(255,255,255,0.9);">✦ Prestigio · Liderando desde el ser</div>
+        <div style="font-size:13px;color:rgba(255,255,255,0.4);margin-top:4px;">Un programa de <strong style="color:rgba(255,255,255,0.7);">Comfama</strong></div>
+      </div>
+    </div>
+    <div class="hero-deco-star deco-tl">✦</div>
+    <div class="hero-deco-star deco-tr">✳</div>
+    <div class="hero-deco-star deco-bl">✿</div>
+  </div>
+</section>
+
+<!-- ===== PROPÓSITO ===== -->
+<section id="proposito">
+  <div class="container">
+    <div class="proposito-grid">
+      <div class="proposito-text">
+        <div class="section-label">01 — Propósito</div>
+        <div class="divider-magenta"></div>
+        <h2 class="section-title">¿Para qué existe este toolkit?</h2>
+        <p>Este toolkit es el repositorio de herramientas prácticas del módulo <strong>"Liderazgo Humano: Pensamiento sistémico y Culturas de Confianza"</strong>. Está diseñado para que los líderes cuenten con recursos accionables en sus contextos reales de trabajo.</p>
+        <p>Cada herramienta traduce los aprendizajes del módulo en prácticas concretas: reflexiones estructuradas, laboratorios de equipo y marcos de análisis para navegar el cambio organizacional con consciencia.</p>
+        <div class="proposito-quote">
+          "No podremos nunca evolucionar la calidad de nuestras conversaciones desde el piloto automático."
+        </div>
+      </div>
+      <div class="proposito-cards">
+        <div class="prop-card">
+          <div class="prop-icon">🎯</div>
+          <div>
+            <h4>Reflexión aplicada</h4>
+            <p>Herramientas que invitan al líder a observarse a sí mismo en relación con el cambio, sus emociones y sus patrones de conversación.</p>
+          </div>
+        </div>
+        <div class="prop-card">
+          <div class="prop-icon">🔄</div>
+          <div>
+            <h4>Trabajo adaptativo</h4>
+            <p>Marcos para diferenciar desafíos técnicos de adaptativos, y actuar con el tipo de liderazgo que cada situación requiere.</p>
+          </div>
+        </div>
+        <div class="prop-card">
+          <div class="prop-icon">🤝</div>
+          <div>
+            <h4>Culturas de confianza</h4>
+            <p>Ejercicios colectivos para desarrollar seguridad psicológica, conversaciones poderosas y equipos que aprenden juntos.</p>
+          </div>
+        </div>
+        <div class="prop-card">
+          <div class="prop-icon">📊</div>
+          <div>
+            <h4>Decisiones complejas</h4>
+            <p>Herramientas estructuradas (como la 446) para mejorar la calidad de las decisiones en contextos de alta incertidumbre.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== OBJETIVO ===== -->
+<section id="objetivo">
+  <div class="container">
+    <div class="objetivo-inner">
+      <div class="objetivo-left">
+        <div class="section-label" style="color:var(--mint);">02 — Objetivo del Módulo</div>
+        <div class="divider-magenta"></div>
+        <h2 class="section-title" style="color:var(--white);">Liderazgo Humano: Pensamiento Sistémico y Culturas de Confianza</h2>
+        <p>Desarrollar en los líderes la capacidad de comprenderse a sí mismos como agentes de cambio, distinguir entre desafíos técnicos y adaptativos, y liderar con herramientas que fortalecen la confianza, la consciencia y la toma de decisiones éticas en entornos complejos.</p>
+        <p>Al finalizar este módulo los líderes habrán explorado su perfil de cambio individual, reconocido sus patrones de conversación y contarán con frameworks accionables para sus equipos.</p>
+        <p>Cada herramienta de este toolkit corresponde a un laboratorio vivencial trabajado durante las sesiones del módulo, diseñado para ser aplicado directamente en el contexto cotidiano del liderazgo.</p>
+      </div>
+      <div class="objetivo-right">
+        <h3>Competencias que desarrolla</h3>
+        <div class="competencia-item"><div class="comp-dot"></div><span>Autoconciencia ante el cambio y la presión</span></div>
+        <div class="competencia-item"><div class="comp-dot"></div><span>Pensamiento sistémico y visión organizacional</span></div>
+        <div class="competencia-item"><div class="comp-dot"></div><span>Gestión de las emociones en entornos complejos</span></div>
+        <div class="competencia-item"><div class="comp-dot"></div><span>Conversaciones conscientes y de calidad</span></div>
+        <div class="competencia-item"><div class="comp-dot"></div><span>Diferenciación entre gestión y liderazgo</span></div>
+        <div class="competencia-item"><div class="comp-dot"></div><span>Toma de decisiones estructurada bajo incertidumbre</span></div>
+        <div class="competencia-item"><div class="comp-dot"></div><span>Conocimiento del propio perfil de cambio</span></div>
+        <div class="competencia-item"><div class="comp-dot"></div><span>Construcción de culturas de confianza</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== HERRAMIENTAS ===== -->
+<section id="herramientas">
+  <div class="container">
+    <div class="herramientas-intro">
+      <div class="section-label">03 — Herramientas del Módulo</div>
+      <div class="divider-magenta"></div>
+      <h2 class="section-title">7 herramientas para el liderazgo consciente</h2>
+      <p class="section-desc">Cada herramienta es un laboratorio de aprendizaje aplicado, diseñado para usarse también en el contexto cotidiano del trabajo.</p>
+    </div>
+
+    <div class="tools-grid">
+
+      <!-- 01 -->
+      <div class="tool-card">
+        <div class="tool-header">
+          <div class="tool-number">01</div>
+          <div class="tool-header-text">
+            <div class="tool-lab">Laboratorio 1</div>
+            <div class="tool-name">Vamos a mirarnos</div>
+          </div>
+        </div>
+        <div class="tool-body">
+          <div class="tool-tag">Autoconciencia</div>
+          <p class="tool-desc">Un espacio de reflexión introspectiva para que el líder observe sus propios patrones frente al cambio: las emociones que emergen, las historias que se construye y las posibilidades que se niega a ver.</p>
+          <ul class="tool-questions">
+            <li>¿Qué historia te cuentas hoy sobre los cambios que abordas en tu día?</li>
+            <li>Cuando piensas los cambios, ¿qué emoción aparece primero y qué trata de proteger en ti? (miedo, rabia, control, seguridad, reconocimiento…)</li>
+            <li>¿Qué evitas decir o reconocer sobre los cambios… incluso contigo mismo?</li>
+            <li>¿Cómo impactan tus emociones la forma en que hablas (o no hablas) con otros sobre el cambio?</li>
+            <li>Si dejaras de resistirte por un momento, ¿qué posibilidad podrías empezar a ver que hoy no estás viendo?</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- 02 -->
+      <div class="tool-card">
+        <div class="tool-header">
+          <div class="tool-number">02</div>
+          <div class="tool-header-text">
+            <div class="tool-lab">Laboratorio 2</div>
+            <div class="tool-name">El cuento que me cuento</div>
+          </div>
+        </div>
+        <div class="tool-body">
+          <div class="tool-tag">Conversación interna</div>
+          <p class="tool-desc">Herramienta de distinción entre hechos observables e interpretaciones. Ayuda al líder a identificar cuándo responde a la realidad y cuándo a la historia que construyó sobre ella.</p>
+          <div style="font-size:13px;font-weight:700;margin-bottom:10px;color:var(--black);">Pasos del ejercicio:</div>
+          <ul class="tool-questions">
+            <li>Elige un cambio real que estés viviendo desde tu rol / empresa / equipo.</li>
+            <li>En la columna 1 escribe los <strong>hechos</strong> (lo observable).</li>
+            <li>En la columna 2 escribe las <strong>historias</strong> (el cuento que te cuentas, las interpretaciones que haces).</li>
+            <li>En equipos de 5 personas comparten lo que encontraron e identifican puntos comunes.</li>
+          </ul>
+          <div style="background:rgba(232,0,126,0.06);border-radius:6px;padding:12px 14px;margin-top:8px;font-size:13px;font-style:italic;color:var(--gray-dark);border-left:3px solid var(--magenta);">
+            "Hacer consciencia de un pensamiento es reconocer nuestro discurso mental."
+          </div>
+        </div>
+      </div>
+
+      <!-- 03 -->
+      <div class="tool-card">
+        <div class="tool-header">
+          <div class="tool-number">03</div>
+          <div class="tool-header-text">
+            <div class="tool-lab">Laboratorio 3</div>
+            <div class="tool-name">Las emociones y el cambio</div>
+          </div>
+        </div>
+        <div class="tool-body">
+          <div class="tool-tag">Inteligencia emocional</div>
+          <p class="tool-desc">Exploración de la relación entre pensamiento, emoción y conversación. El líder descubre cómo su diálogo interno moldea su estado de ánimo y la calidad de sus interacciones.</p>
+          <ul class="tool-questions">
+            <li>¿Qué es una emoción?</li>
+            <li>¿Qué impacto tiene el pensamiento en la emoción?</li>
+            <li>¿Cómo mi conversación privada (pensamiento) impacta a mi conversación pública?</li>
+          </ul>
+          <p style="font-size:13px;margin-top:10px;color:var(--gray-dark);">Las conversaciones privadas nos constituyen: definen nuestro estado de ánimo y son artífices de nuestro sufrimiento y nuestra felicidad.</p>
+        </div>
+      </div>
+
+      <!-- 04 -->
+      <div class="tool-card">
+        <div class="tool-header">
+          <div class="tool-number">04</div>
+          <div class="tool-header-text">
+            <div class="tool-lab">Laboratorio 4</div>
+            <div class="tool-name">El poder de las conversaciones</div>
+          </div>
+        </div>
+        <div class="tool-body">
+          <div class="tool-tag">Comunicación consciente</div>
+          <p class="tool-desc">Marco sobre cómo las conversaciones públicas nos revelan. Explora la diferencia entre responder con consciencia versus reaccionar en piloto automático.</p>
+          <div style="background:rgba(0,0,0,0.04);border-radius:6px;padding:12px 14px;margin-bottom:12px;font-size:13px;color:var(--gray-dark);">
+            Las conversaciones públicas nos revelan. Lo que decimos a otros está determinado por nuestro diálogo interno. Permanentemente llevamos nuestras creencias a la conversación.
+          </div>
+          <ul class="tool-questions">
+            <li>¿Eres consciente de tus conversaciones privadas cuando abordas conversaciones de gestión de cambio?</li>
+            <li>¿Cómo conversas contigo?, ¿qué te dices frecuentemente?</li>
+            <li>¿En tus conversaciones buscas ser el que tiene la razón?</li>
+            <li>¿Tus conversaciones qué generan en el otro?</li>
+            <li>¿Sabes escuchar al que piensa distinto a ti?, ¿qué te sucede?</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- 05 -->
+      <div class="tool-card">
+        <div class="tool-header">
+          <div class="tool-number">05</div>
+          <div class="tool-header-text">
+            <div class="tool-lab">Marco conceptual</div>
+            <div class="tool-name">Desafío técnico vs. desafío adaptativo</div>
+          </div>
+        </div>
+        <div class="tool-body">
+          <div class="tool-tag">Pensamiento sistémico</div>
+          <p class="tool-desc">Framework central para diagnosticar la naturaleza de los retos organizacionales y elegir el tipo de liderazgo adecuado para cada uno.</p>
+          <table class="compare-table">
+            <thead>
+              <tr><th>Desafío Técnico</th><th>Desafío Adaptativo</th></tr>
+            </thead>
+            <tbody>
+              <tr><td class="td-tech">Problema y solución conocidos</td><td class="td-adapt">Problema y/o solución no conocidos</td></tr>
+              <tr><td class="td-tech">No es necesario aprender</td><td class="td-adapt">Requiere aprender nuevas capacidades</td></tr>
+              <tr><td class="td-tech">Gestión → Accountability individual</td><td class="td-adapt">Liderazgo → Accountability grupal</td></tr>
+              <tr><td class="td-tech">Errores → Penalizar / Corregir</td><td class="td-adapt">Fracaso → Aprendizaje</td></tr>
+            </tbody>
+          </table>
+          <div style="margin-top:12px;font-size:12px;color:var(--gray-mid);">El cambio implica retos adaptativos: tocan el comportamiento (hábitos, lenguaje, rituales) y la mentalidad (creencias, valores, supuestos).</div>
+        </div>
+      </div>
+
+      <!-- 06 — HERRAMIENTA 446 -->
+      <div class="tool-card" style="grid-column: 1 / -1;">
+        <div class="tool-header">
+          <div class="tool-number">06</div>
+          <div class="tool-header-text">
+            <div class="tool-lab">Herramienta estructurada</div>
+            <div class="tool-name">Herramienta 446</div>
+          </div>
+        </div>
+        <div class="tool-body">
+          <div class="tool-tag">Toma de decisiones</div>
+          <div class="h446-img-wrap">
+            <!-- Imagen 1: HERRAMIENTA 446 -->
+            <div class="h446-img-block">
+              <img src="herramienta_446.png" alt="Herramienta 446 — Criterios, Reglas y Alternativas para la toma de decisiones" class="h446-img">
+            </div>
+            <!-- Imagen 2: ÁRBOL DE DECISIÓN TÉCNICA 466 + RESUMEN -->
+            <div class="h446-img-block" style="margin-top:28px;">
+              <img src="arbol_466.png" alt="Árbol de Decisión Técnica 466 y Resumen Técnica 466" class="h446-img">
+            </div>
+          </div><!-- /h446-img-wrap -->
+        </div><!-- /tool-body -->
+      </div><!-- /tool-card 06 -->
+
+      <!-- 07 — PERFIL DE CAMBIO (full width) -->
+      <div class="tool-card" style="grid-column: 1 / -1;">
+        <div class="tool-header">
+          <div class="tool-number">07</div>
+          <div class="tool-header-text">
+            <div class="tool-lab">Herramienta — Introspección</div>
+            <div class="tool-name">Perfil del Cambio Individual</div>
+          </div>
+        </div>
+        <div class="tool-body" style="display:grid;grid-template-columns:1fr 1fr;gap:32px;">
+          <div>
+            <div class="tool-tag">Perfil de cambio</div>
+            <p class="tool-desc">El Perfil de Cambio Individual permite entender cómo reaccionamos naturalmente ante el cambio, la presión y la toma de decisiones. No clasifica a las personas en buenas o malas; muestra sus tendencias de comportamiento, fortalezas y riesgos cuando enfrentan entornos de transformación.</p>
+            <div style="font-size:13px;font-weight:700;margin-bottom:10px;color:var(--black);">Responde 3 preguntas fundamentales:</div>
+            <ul class="tool-questions">
+              <li>¿Cómo aporto valor en los procesos de cambio?</li>
+              <li>¿Qué comportamientos pueden limitar mi efectividad bajo presión?</li>
+              <li>¿Qué debo desarrollar para adaptarme mejor a los desafíos futuros?</li>
+            </ul>
+            <div style="margin-top:16px;padding:14px;background:rgba(232,0,126,0.06);border-radius:6px;border-left:3px solid var(--magenta);">
+              <div style="font-size:12px;font-weight:700;color:var(--magenta);margin-bottom:8px;">¿Qué hacer con los resultados?</div>
+              <div style="font-size:13px;color:var(--gray-dark);line-height:1.7;">
+                <strong>1. Aprovecha tus fortalezas naturales.</strong> Identifica aquello que te hace valioso en un proceso de cambio y úsalo de manera consciente.<br><br>
+                <strong>2. Gestiona tus riesgos bajo presión.</strong> Toda fortaleza llevada al extremo se convierte en una limitación.<br><br>
+                <strong>3. Desarrolla comportamientos complementarios.</strong> Los líderes más efectivos no son quienes conocen su perfil, sino quienes aprenden a moverse fuera de él cuando la situación lo exige.
+              </div>
+            </div>
+          </div>
+          <div>
+            <div style="font-size:13px;font-weight:700;margin-bottom:14px;color:var(--black);">Los 4 perfiles de cambio:</div>
+            <div class="perfil-grid">
+              <div class="perfil-item perfil-empatico">
+                <span class="perfil-name">🤝 Empático</span>
+                <span class="perfil-mot">Motivación: Curiosidad | Bajo presión: Inseguro · Cede · Calla</span>
+                <div style="font-size:12px;margin-top:6px;color:var(--gray-dark);">Orientado a personas. Genera confianza y estabilidad.</div>
+              </div>
+              <div class="perfil-item perfil-involucrador">
+                <span class="perfil-name">✨ Involucrador</span>
+                <span class="perfil-mot">Motivación: Optimismo | Bajo presión: Exceso de diplomacia · Pierde foco</span>
+                <div style="font-size:12px;margin-top:6px;color:var(--gray-dark);">Carismático, persuasivo. Moviliza y conecta personas.</div>
+              </div>
+              <div class="perfil-item perfil-analitico">
+                <span class="perfil-name">🔍 Analítico</span>
+                <span class="perfil-mot">Motivación: Perfección | Bajo presión: Lento · Rígido · Sobre-analiza</span>
+                <div style="font-size:12px;margin-top:6px;color:var(--gray-dark);">Detallista y lógico. Aporta rigor y claridad al proceso.</div>
+              </div>
+              <div class="perfil-item perfil-resolutivo">
+                <span class="perfil-name">⚡ Resolutivo</span>
+                <span class="perfil-mot">Motivación: Logro | Bajo presión: Autoritario · Impulsivo · Controlador</span>
+                <div style="font-size:12px;margin-top:6px;color:var(--gray-dark);">Orientado a resultados. Impulsa decisiones y ejecución.</div>
+              </div>
+            </div>
+            <div style="margin-top:16px;border-top:1px solid var(--gray-light);padding-top:16px;">
+              <div style="font-size:13px;font-weight:700;margin-bottom:10px;color:var(--black);">Herramientas adicionales:</div>
+              <ul class="tool-questions">
+                <li><strong>Revisa tu lenguaje:</strong> ¿Estás empoderando o controlando? "¿Esto necesita mi control… o necesita que confíe?"</li>
+                <li><strong>Analiza tu agenda:</strong> Tu calendario revela tu nivel de autogestión. ¿Estás generando autonomía o centralizando todo?</li>
+                <li><strong>Observa tus correos y autorizaciones:</strong> El exceso de aprobaciones es uno de los mayores enemigos de la autogestión.</li>
+              <li><strong>Usa el feedback como motor del cambio:</strong> El feedback hace visible lo que no vemos, alinea comportamientos con resultados y acelera la adaptación. Dalo basado en hechos, específico y centrado en comportamientos observables. Fórmula: <em>Situación → Comportamiento → Impacto → Próximo paso.</em></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ===== FOOTER ===== -->
+<footer>
+  <div class="container">
+    <div class="footer-inner">
+      <div class="footer-logos">
+        <img src="PRESTIGIO LOGO NUEVO.png" alt="Prestigio" class="footer-logo-prestigio">
+        <span class="footer-sep">|</span>
+        <img src="comfama_logo.png" alt="Comfama" class="footer-logo-comfama">
+        <span class="footer-sep">|</span>
+        <img src="vigilado_logo.png" alt="Vigilado Supersubsidio" class="footer-vigilado">
+      </div>
+      <div class="footer-info">
+        <p>Toolkit · Programa <em>Liderazgo desde el Ser: Visión Digital y Adaptabilidad</em></p>
+        <p>Módulo 1: Liderazgo Humano · Pensamiento Sistémico y Culturas de Confianza</p>
+        <p style="margin-top:8px;">Opera: <strong style="color:rgba(255,255,255,0.6);">Prestigio</strong> · Un programa de: <strong style="color:var(--magenta);">Comfama</strong></p>
+      </div>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      
+ 
